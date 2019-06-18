@@ -26,13 +26,12 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Region;
 import android.graphics.Shader;
-import android.support.annotation.FloatRange;
 import android.util.AttributeSet;
 
-import com.db.chart.util.Tools;
 import com.db.chart.model.ChartSet;
 import com.db.chart.model.LineSet;
 import com.db.chart.model.Point;
+import com.db.chart.util.Tools;
 import com.db.williamchart.R;
 
 import java.util.ArrayList;
@@ -48,12 +47,14 @@ public class LineChartView extends ChartView {
     /**
      * Style applied to line chart
      */
-    private final Style mStyle;
+    public Style mStyle;
 
     /**
      * Radius clickable region
      */
-    private float mClickableRadius;
+    public float mClickableRadius;
+
+
 
 
     public LineChartView(Context context, AttributeSet attrs) {
@@ -131,6 +132,16 @@ public class LineChartView extends ChartView {
                 if (lineSet.hasFill() || lineSet.hasGradientFill())
                     canvas.drawPath(createBackgroundPath(new Path(linePath), lineSet), mStyle.mFillPaint);
 
+//                int[] gradient = new int[]{
+//                        Color.parseColor("#7b1fa2"),
+//                        Color.parseColor("#dd2c00"),
+//                        Color.parseColor("#f57f17"),
+//                        Color.parseColor("#cddc39"),
+//                        Color.parseColor("#558b2f")
+//                };
+//                mStyle.mLinePaint.setShader(new LinearGradient(0, 0, 0, getHeight(), gradient, null, Shader.TileMode.CLAMP));
+
+
                 //Draw line
                 canvas.drawPath(linePath, mStyle.mLinePaint);
 
@@ -139,6 +150,18 @@ public class LineChartView extends ChartView {
             }
         }
 
+    }
+
+
+    /**
+     * (Optional) To be overridden in case the view needs to execute some code before
+     * starting the drawing.
+     *
+     * @param data Array of {@link ChartSet} to do the necessary preparation just before onDraw
+     */
+    @Override
+    public void onPreDrawChart(ArrayList<ChartSet> data) {
+        super.onPreDrawChart(data);
     }
 
     @Override
@@ -168,7 +191,7 @@ public class LineChartView extends ChartView {
     /**
      * Responsible for drawing points
      */
-    private void drawPoints(Canvas canvas, LineSet set) {
+    public void drawPoints(Canvas canvas, LineSet set) {
 
         int begin = set.getBegin();
         int end = set.getEnd();
@@ -219,7 +242,7 @@ public class LineChartView extends ChartView {
      * @param set {@link LineSet} object
      * @return {@link Path} object containing line
      */
-    Path createLinePath(LineSet set) {
+    public Path createLinePath(LineSet set) {
 
         Path res = new Path();
 
@@ -241,7 +264,7 @@ public class LineChartView extends ChartView {
      * @param set {@link LineSet} object.
      * @return {@link Path} object containing smooth line
      */
-    Path createSmoothLinePath(LineSet set) {
+    public Path createSmoothLinePath(LineSet set) {
 
         float thisPointX;
         float thisPointY;
@@ -297,7 +320,7 @@ public class LineChartView extends ChartView {
      * @param set  {@link LineSet} object.
      * @return {@link Path} object containing background
      */
-    private Path createBackgroundPath(Path path, LineSet set) {
+    public Path createBackgroundPath(Path path, LineSet set) {
 
         mStyle.mFillPaint.setAlpha((int) (set.getAlpha() * style.FULL_ALPHA));
 
@@ -319,7 +342,7 @@ public class LineChartView extends ChartView {
      * @param radius Point's radius where touch event will be detected
      * @return {@link com.db.chart.view.LineChartView} self-reference.
      */
-    public LineChartView setClickablePointRadius(@FloatRange(from = 0.f) float radius) {
+    public LineChartView setClickablePointRadius(float radius) {
 
         mClickableRadius = radius;
         return this;
@@ -330,7 +353,7 @@ public class LineChartView extends ChartView {
      * Class responsible to style the LineChart!
      * Can be instantiated with or without attributes.
      */
-    class Style {
+    public class Style {
 
         static final int FULL_ALPHA = 255;
 
@@ -341,16 +364,16 @@ public class LineChartView extends ChartView {
 
         private Paint mDotsStrokePaint;
 
-        private Paint mLinePaint;
+        public Paint mLinePaint;
 
-        private Paint mFillPaint;
+        public Paint mFillPaint;
 
 
-        Style() {
+        public Style() {
         }
 
 
-        Style(TypedArray attrs) {
+        public Style(TypedArray attrs) {
         }
 
         private void init() {

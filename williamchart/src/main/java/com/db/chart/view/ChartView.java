@@ -409,7 +409,7 @@ public abstract class ChartView extends RelativeLayout {
      * by the user. This ensures that onTouchEvent will return the correct index.
      *
      * @param regions Empty list of regions where result of this method must be assigned
-     * @param data    {@link java.util.ArrayList} of {@link com.db.chart.model.ChartSet}
+     * @param data    {@link ArrayList} of {@link com.db.chart.model.ChartSet}
      *                to use while defining each region of a {@link com.db.chart.view.ChartView}
      */
     void defineRegions(ArrayList<ArrayList<Region>> regions, ArrayList<ChartSet> data) {
@@ -420,7 +420,7 @@ public abstract class ChartView extends RelativeLayout {
      * Method responsible to draw bars with the parsed screen points.
      *
      * @param canvas The canvas to draw on
-     * @param data   {@link java.util.ArrayList} of {@link com.db.chart.model.ChartSet}
+     * @param data   {@link ArrayList} of {@link com.db.chart.model.ChartSet}
      *               to use while drawing the Chart
      */
     protected abstract void onDrawChart(Canvas canvas, ArrayList<ChartSet> data);
@@ -827,7 +827,7 @@ public abstract class ChartView extends RelativeLayout {
      *
      * @param orien Orientation.HORIZONTAL | Orientation.VERTICAL
      */
-    void setOrientation(@NonNull Orientation orien) {
+    public void setOrientation(@NonNull Orientation orien) {
 
         mOrientation = checkNotNull(orien);
         if (mOrientation == Orientation.VERTICAL) {
